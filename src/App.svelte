@@ -3,6 +3,10 @@
   export let lastName = "";
   export let email = "";
   export let overThirteen = false;
+
+  const validateSubmission = (v) => {
+    console.log(v);
+  };
 </script>
 
 <main>
@@ -12,24 +16,47 @@
     be, but we are doing research to find out what our users want. Subscribe to
     our mailing list below to get updates on our progress.
   </p>
-  <form>
+  <form on:submit|preventDefault={validateSubmission}>
     <div class="inputsInline">
       <label for="firstName">
         First Name
-        <input id="firstName" bind:value={firstName} />
+        <input
+          id="firstName"
+          type="text"
+          bind:value={firstName}
+          minlength="3"
+          maxlength="32"
+          pattern="[a-zA-Z-]*"
+          required
+        />
       </label>
 
       <label for="lastName">
         Last Name
-        <input id="lastName" bind:value={lastName} />
+        <input
+          id="lastName"
+          type="text"
+          bind:value={lastName}
+          minlength="3"
+          maxlength="32"
+          pattern="[a-zA-Z-]*"
+          required
+        />
       </label>
     </div>
     <label for="email">
       Email
-      <input id="email" bind:value={email} />
+      <input
+        id="email"
+        type="email"
+        bind:value={email}
+        minlength="4"
+        maxlength="64"
+        required
+      />
     </label>
     <label for="overThirteen">
-      <input type="checkbox" id="overThirteen" bind:value={overThirteen} />
+      <input type="checkbox" id="overThirteen" bind:checked={overThirteen} required pattern="true" />
       I am over the age of thirteen.
     </label>
     <button>Submit</button>
@@ -60,7 +87,8 @@
     }
 
     label {
-      input, button {
+      input,
+      button {
         margin: 4px;
         margin-bottom: 8px;
         padding: 8px;
@@ -71,6 +99,18 @@
           display: inline-block;
           padding: 8px;
         }
+      }
+    }
+
+    input {
+      &:invalid {
+        border: 2px dashed red;
+      }
+      &:invalid:required {
+        background: rgb(255, 216, 223);
+      }
+      &:valid {
+        border: 2px solid black;
       }
     }
   }
