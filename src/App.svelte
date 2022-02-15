@@ -20,33 +20,6 @@
       </p>
     </div>
     <form on:submit|preventDefault={validateSubmission}>
-      <div class="inputsInline">
-        <label for="firstName">
-          First Name
-          <input
-            id="firstName"
-            type="text"
-            bind:value={firstName}
-            minlength="3"
-            maxlength="32"
-            pattern="[a-zA-Z-]*"
-            required
-          />
-        </label>
-
-        <label for="lastName">
-          Last Name
-          <input
-            id="lastName"
-            type="text"
-            bind:value={lastName}
-            minlength="3"
-            maxlength="32"
-            pattern="[a-zA-Z-]*"
-            required
-          />
-        </label>
-      </div>
       <label for="email">
         Email
         <input
@@ -82,7 +55,7 @@
     max-width: 100%;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
     gap: 16px;
 
     #left,
@@ -106,9 +79,6 @@
 
   form {
     padding: 16px;
-    .inputsInline {
-      display: inline-flex;
-    }
 
     label {
       input,
@@ -142,13 +112,6 @@
   @media (min-width: 640px) {
     main {
       max-width: 1200px;
-    }
-  }
-  @media (max-width: 639px) {
-    form {
-      .inputsInline {
-        display: inline-block;
-      }
     }
   }
 </style>
