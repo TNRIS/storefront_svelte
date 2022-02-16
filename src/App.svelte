@@ -1,6 +1,4 @@
 <script>
-  export let firstName = "";
-  export let lastName = "";
   export let email = "";
   export let overThirteen = false;
 
@@ -45,7 +43,7 @@
     </form>
   </div>
   <div id="right">
-    <img id="image" src="#" />
+    <img id="image" src="#" alt="alternate_text" />
   </div>
 </main>
 
@@ -88,7 +86,9 @@
         padding: 8px;
         display: block;
         border: solid 1px lightgray;
+      }
 
+      input {
         &[type="checkbox"] {
           display: inline-block;
           padding: 8px;
