@@ -29,16 +29,6 @@
           required
         />
       </label>
-      <label for="overThirteen">
-        <input
-          type="checkbox"
-          id="overThirteen"
-          bind:checked={overThirteen}
-          required
-          pattern="true"
-        />
-        I am over the age of thirteen.
-      </label>
       <button>Submit</button>
     </form>
   </div>
