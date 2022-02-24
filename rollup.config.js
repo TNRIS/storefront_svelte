@@ -41,11 +41,11 @@ export default {
 	},
 	plugins: [
 		svelte({
+			preprocess: preprocess(),
 			compilerOptions: {
 				// enable run-time checks when not in production
 				dev: !production
 			},
-			preprocess: preprocess()
 		}),
 		// we'll extract any component CSS out into
 		// a separate file - better for performance
