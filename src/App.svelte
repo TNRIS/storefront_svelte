@@ -1,8 +1,54 @@
 <script>
   export let email = undefined;
 
-  const validateSubmission = (v) => {
-    console.log(v);
+  export let submitResp = undefined;
+
+  const submitSubscription = (data) => {
+    const campaignId = "de4b945e-b682-46e2-9e1b-0d6fe1854a13";
+    data["campaign"] = campaignId;
+
+    fetch("http://api.tnris.org/api/v1/contact/campaignsubscription", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+      mode: "no-cors",
+      redirect: "manual",
+    })
+      .then((resp) => {
+        return resp.json();
+      })
+      .then((data) => {
+        if (data.success) {
+          window.location.href = data.url;
+        } else {
+          submitResp=data
+          window.location.href = data.url;
+        }
+      })
+      .catch((e) => console.info(e));
+  };
+
+  function validateEmail(email) {
+    var re = /\S+@\S+\.\S+/;
+    return re.test(email);
+  }
+
+  const onSubmit = (e) => {
+    const formData = new FormData(e.target);
+    const data = {};
+    for (let field of formData) {
+      const [key, value] = field;
+      data[key] = value;
+    }
+    if (data["email"] && validateEmail(data["email"])) {
+      submitSubscription(data);
+    } else {
+      console.log("email not set or invalid");
+    }
+    console.log(validateEmail(data["email"]));
+    console.log(data);
   };
 </script>
 
@@ -22,11 +68,12 @@
           </strong>
         </p>
       </div>
-      <form on:submit|preventDefault={validateSubmission}>
+      <form on:submit|preventDefault={onSubmit}>
         <input
           placeholder="enter your email"
           id="email"
           type="email"
+          name="email"
           bind:value={email}
           minlength="4"
           maxlength="64"
