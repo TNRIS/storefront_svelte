@@ -20,7 +20,7 @@
         "Content-Type": "application/json",
       },
       body: form_data,
-      mode: "no-cors"
+      mode: "no-cors",
     })
       .then((dataWrappedByPromise) => {
         const txt = dataWrappedByPromise.json();
@@ -28,7 +28,7 @@
       })
       .then((data) => {
         console.log(data);
-        //Redirect is the URL inside the text of the response promise
+        submitResp = data;
       });
   };
 
@@ -137,6 +137,9 @@
     :global(html) {
       main {
         background: url("images/TNRIS_StoreLandingImage_220222.png");
+        background-repeat: no-repeat;
+        background-position: bottom;
+        background-size: cover;
       }
     }
   }
@@ -150,6 +153,7 @@
       font-weight: 400;
       font-size: 55px;
       line-height: 70px;
+      margin-top: 0px;
     }
     p {
       font-family: Quicksand;
