@@ -3,7 +3,7 @@
 
   export let submitResp = undefined;
 
-  const submitSubscription = (data) => {
+  const submitSubscription = async (data) => {
     const campaignId = "de4b945e-b682-46e2-9e1b-0d6fe1854a13";
     data["campaign"] = campaignId;
 
@@ -13,23 +13,27 @@
       form_data.append(key, data[key]);
     }
 
-    fetch("https://api.tnris.org/api/v1/contact/campaignsubscription", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: form_data,
-      mode: "no-cors",
-    })
-      .then((dataWrappedByPromise) => {
-        const txt = dataWrappedByPromise.json();
-        return txt;
-      })
-      .then((data) => {
-        console.log(data);
-        submitResp = data;
-      });
+    const resp = await fetch(
+      "https://api.tnris.org/api/v1/contact/campaignsubscription",
+      {
+        method: "POST",
+        body: form_data,
+      }
+    );
+
+    if (resp.ok) {
+      const okResp = await resp.json();
+      submitResp = { status: resp.status, data: okResp };
+      console.log(submitResp);
+      email = undefined;
+      return submitResp;
+    } else {
+      const errJson = await resp.json();
+      submitResp = { status: resp.status, data: errJson };
+      console.log(submitResp);
+      email = undefined;
+      return submitResp;
+    }
   };
 
   function validateEmail(email) {
@@ -79,6 +83,19 @@
           maxlength="64"
           required
         />
+        {#if submitResp}
+          <div id="submissionResponse">
+            {#if submitResp.status == 400}
+              <p class="errorResponse">{submitResp.data.email[0]}</p>
+            {/if}
+            {#if submitResp.status == 201}
+              <p class="successResponse">
+                Thanks for signing up and showing interest in the store! We'll
+                let you know about progress and launch updates.
+              </p>
+            {/if}
+          </div>
+        {/if}
         <button id="submitEmail" class="primary">Submit</button>
       </form>
     </div>
@@ -111,6 +128,18 @@
   form {
     display: grid;
     grid-template-rows: auto;
+  }
+  .successResponse {
+    color: green;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 24px;
+  }
+  .errorResponse {
+    color: red;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 24px;
   }
   @media (min-width: 640px) {
     main {
