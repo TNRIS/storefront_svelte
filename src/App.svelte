@@ -7,27 +7,29 @@
     const campaignId = "de4b945e-b682-46e2-9e1b-0d6fe1854a13";
     data["campaign"] = campaignId;
 
-    fetch("http://api.tnris.org/api/v1/contact/campaignsubscription", {
+    let form_data = new FormData();
+
+    for (var key in data) {
+      form_data.append(key, data[key]);
+    }
+
+    fetch("https://api.tnris.org/api/v1/contact/campaignsubscription", {
       method: "POST",
       headers: {
+        Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(data),
-      mode: "no-cors",
-      redirect: "manual",
+      body: form_data,
+      mode: "no-cors"
     })
-      .then((resp) => {
-        return resp.json();
+      .then((dataWrappedByPromise) => {
+        const txt = dataWrappedByPromise.json();
+        return txt;
       })
       .then((data) => {
-        if (data.success) {
-          window.location.href = data.url;
-        } else {
-          submitResp=data
-          window.location.href = data.url;
-        }
-      })
-      .catch((e) => console.info(e));
+        console.log(data);
+        //Redirect is the URL inside the text of the response promise
+      });
   };
 
   function validateEmail(email) {
@@ -47,8 +49,6 @@
     } else {
       console.log("email not set or invalid");
     }
-    console.log(validateEmail(data["email"]));
-    console.log(data);
   };
 </script>
 
