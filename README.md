@@ -1,5 +1,5 @@
 # Store.tnris.org frontend
-This project used the [Svelte](https://svelte.dev) template. It lives at https://github.com/sveltejs/template.
+This project uses the [Svelte](https://svelte.dev) template. It lives at https://github.com/sveltejs/template.
 
 ## Get started
 
