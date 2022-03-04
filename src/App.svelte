@@ -222,9 +222,6 @@
         border-radius: 8px;
         padding: 12px 20px;
 
-        &:invalid {
-          border: 2px dashed rgb(219, 113, 113);
-        }
         &:valid {
           border: 2px solid black;
         }
