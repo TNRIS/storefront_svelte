@@ -62,7 +62,7 @@
       <div id="interestStatement">
         <h1>Map Products Supporting Texas' GIS Community</h1>
         <p>
-          We're excited to be developing a new store concept of curated
+          We are excited to be developing a new store concept of curated
           historical, artistic, and GIS branded products with profits
           benefitting the Texas GIS Forum and education initiatives.
         </p>
